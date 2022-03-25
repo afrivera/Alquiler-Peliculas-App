@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import clienteAxios from "./config/clienteAxios";
 
@@ -16,10 +17,10 @@ function App() {
   },[])
 
   return (
-    <div className="App">
+    <BrowserRouter>
       <Header />
       <h1>Hola Mundo</h1>
-    </div>
+    </BrowserRouter>
   );
 }
 
