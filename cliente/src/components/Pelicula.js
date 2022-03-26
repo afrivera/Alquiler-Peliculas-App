@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Pelicula = ({ pelicula }) => {
 
+    const { titulo, directore, actore } = pelicula
+
     const navigate = useNavigate();
 
     const handleOnclick = ()=>{
@@ -9,13 +11,13 @@ const Pelicula = ({ pelicula }) => {
       }
     return (
         <div>
-            <h2>{pelicula.titulo}</h2>
-            <p>Director: <span>{pelicula.directore.nombre}</span></p>
-            <p>Actor: <span>{pelicula.actore.nombre}</span></p>
+            <h2>{titulo}</h2>
+            <p>Director: <span>{directore.nombre}</span></p>
+            <p>Actor: <span>{actore.nombre}</span></p>
             <button
             onClick={ handleOnclick }
             >Alquilar</button>
-    </div>
+        </div>
     )
 }
 

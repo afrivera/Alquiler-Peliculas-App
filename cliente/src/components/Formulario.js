@@ -1,110 +1,160 @@
 import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import Alerta from './Alerta';
 
 const Formulario = () => {
-  return (
-    <div>
-        <h3>Agrega tu pelicula</h3>
 
-        <Formik
-            initialValues={{
-            }}
-            enableReinitialize={true}
-        >
-            <Form>
+    const nuevaPeliculaSchema = Yup.object().shape({
+        identificacion: Yup.string().
+                            required('Este Campo es Obligatorio'),
+        nombre: Yup.string().
+                            required('Este Campo es Obligatorio'),
+        fechaI: Yup.date().
+                            required('Este Campo es Obligatorio'),
+        fechaE: Yup.date().
+                            required('Este Campo es Obligatorio'),
+        direccion: Yup.string().
+                            required('Este Campo es Obligatorio'),
+        telefono: Yup.string().
+                            required('Este Campo es Obligatorio'),
+        correo: Yup.string().
+                            required('Este Campo es Obligatorio'),
+    })
+
+    return (
+        <div>
+            <h3>Agrega tu pelicula</h3>
+
+            <Formik
+                initialValues={{
+                    identificacion: '',
+                    nombre: '',
+                    fechaI: '',
+                    fechaE: '',
+                    direccion: '',
+                    telefono: '',
+                    correo: '',
+                }}
+                enableReinitialize={true}
+                validationSchema={nuevaPeliculaSchema}
+            >
+                {({errors, touched})=>{
+                    return(
+                        <Form>
                 <div>
-                    <label
-                        htmlFor='titulo'
-                    >Pelicula:</label>
-                    <Field
-                        className=''
-                        type='text'
-                        id='titulo'
-                        name='titulo'
-                    />
-                </div>
-                <div>
-                    <label
-                        htmlFor='fecha-inicial'
-                    >Fecha Inicial:</label>
-                    <Field
-                        className=''
-                        type='date'
-                        id='fecha-inicial'
-                        name='fecha-inicial'
-                    />
-                </div>
-                <div>
-                    <label
-                        htmlFor='fecha-entrega'
-                    >Fecha de Entrega:</label>
-                    <Field
-                        className=''
-                        type='date'
-                        id='fecha-entrega'
-                        name='fecha-entrega'
-                    />
-                </div>
-                <div>
-                    <label
-                        htmlFor='identificacion'
-                    >Identificación:</label>
-                    <Field
-                        className=''
-                        type='text'
-                        id='identificacion'
-                        name='identificacion'
-                    />
-                </div>
-                <div>
-                    <label
-                        htmlFor='nombre'
-                    >Nombre Usuario:</label>
-                    <Field
-                        className=''
-                        type='text'
-                        id='nombre'
-                        name='nombre'
-                    />
-                </div>
-                <div>
-                    <label
-                        htmlFor='direccion'
-                    >Dirección:</label>
-                    <Field
-                        className=''
-                        type='text'
-                        id='direccion'
-                        name='direccion'
-                    />
-                </div>
-                <div>
-                    <label
-                        htmlFor='telefono'
-                    >Telefono:</label>
-                    <Field
-                        className=''
-                        type='text'
-                        id='telefono'
-                        name='telefono'
-                    />
-                </div>
-                <div>
-                    <label
-                        htmlFor='correo'
-                    >Correo:</label>
-                    <Field
-                        className=''
-                        type='text'
-                        id='correo'
-                        name='correo'
-                    />
-                </div>
-            </Form>
-        </Formik>
-    </div>
-  )
+                        <label
+                            htmlFor='identificacion'
+                        >Identificación:</label>
+                        <Field
+                            className=''
+                            type='text'
+                            id='identificacion'
+                            name='identificacion'
+                        />
+                        {
+                            (errors.identificacion && touched.identificacion) ?
+                            <Alerta>{errors.identificacion}</Alerta>: null
+                        }
+                    </div>
+                    <div>
+                        <label
+                            htmlFor='nombre'
+                        >Nombre Usuario:</label>
+                        <Field
+                            className=''
+                            type='text'
+                            id='nombre'
+                            name='nombre'
+                        />
+                        {
+                            (errors.nombre && touched.nombre) ?
+                            <Alerta>{errors.nombre}</Alerta>: null
+                        }
+                    </div>
+                    <div>
+                        <label
+                            htmlFor='fechaI'
+                        >Fecha Inicial:</label>
+                        <Field
+                            className=''
+                            type='date'
+                            id='fechaI'
+                            name='fechaI'
+                        />
+                        {
+                            (errors.fechaI && touched.fechaI) ?
+                            <Alerta>{errors.fechaI}</Alerta>: null
+                        }
+                    </div>
+                    <div>
+                        <label
+                            htmlFor='fechaE'
+                        >Fecha de Entrega:</label>
+                        <Field
+                            className=''
+                            type='date'
+                            id='fechaE'
+                            name='fechaE'
+                        />
+                        {
+                            (errors.fechaE && touched.fechaE) ?
+                            <Alerta>{errors.fechaE}</Alerta>: null
+                        }
+                    </div>
+                    
+                    <div>
+                        <label
+                            htmlFor='direccion'
+                        >Dirección:</label>
+                        <Field
+                            className=''
+                            type='text'
+                            id='direccion'
+                            name='direccion'
+                        />
+                        {
+                            (errors.direccion && touched.direccion) ?
+                            <Alerta>{errors.direccion}</Alerta>: null
+                        }
+                    </div>
+                    <div>
+                        <label
+                            htmlFor='telefono'
+                        >Telefono:</label>
+                        <Field
+                            className=''
+                            type='text'
+                            id='telefono'
+                            name='telefono'
+                        />
+                        {
+                            (errors.telefono && touched.telefono) ?
+                            <Alerta>{errors.telefono}</Alerta>: null
+                        }
+                    </div>
+                    <div>
+                        <label
+                            htmlFor='correo'
+                        >Correo:</label>
+                        <Field
+                            className=''
+                            type='text'
+                            id='correo'
+                            name='correo'
+                        />
+                        {
+                            (errors.correo && touched.correo) ?
+                            <Alerta>{errors.correo}</Alerta>: null
+                        }
+                    </div>
+                </Form>
+                    )
+                }}
+                
+            </Formik>
+        </div>
+    )
 }
 
 export default Formulario;
