@@ -1,25 +1,23 @@
-import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import clienteAxios from "./config/clienteAxios";
+import AlquilarPelicula from './pages/AlquilarPelicula';
+import Inicio from './pages/Inicio';
 
 
 function App() {
-  const [peliculas, setPeliculas] = useState([]);
-
-  useEffect(()=>{
-    const cargarPeliculas = async()=>{
-      const { data } = await clienteAxios.get('/peliculas');
-      setPeliculas(data.pelis);
-    }
-
-    cargarPeliculas();
-  },[])
+  
 
   return (
     <BrowserRouter>
-      <Header />
-      <h1>Hola Mundo</h1>
+      <Routes>
+        <Route path='/' element={<Header />}>
+          <Route index element={<Inicio />} />
+          <Route path='/alquilar-peliculas/:id' element={ <AlquilarPelicula />} />
+
+        </Route>
+
+
+      </Routes>
     </BrowserRouter>
   );
 }
