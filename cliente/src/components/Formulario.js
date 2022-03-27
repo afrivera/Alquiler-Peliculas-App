@@ -1,26 +1,46 @@
 import { Formik, Form, Field } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
+import clienteAxios from '../config/clienteAxios';
 import Alerta from './Alerta';
 
 const Formulario = () => {
 
+    const navigate = useNavigate();
+    const { id } = useParams();
+
     const nuevaPeliculaSchema = Yup.object().shape({
-        identificacion: Yup.string().
-                            required('Este Campo es Obligatorio'),
-        nombre: Yup.string().
-                            required('Este Campo es Obligatorio'),
-        fechaI: Yup.date().
-                            required('Este Campo es Obligatorio'),
-        fechaE: Yup.date().
-                            required('Este Campo es Obligatorio'),
-        direccion: Yup.string().
-                            required('Este Campo es Obligatorio'),
-        telefono: Yup.string().
-                            required('Este Campo es Obligatorio'),
-        correo: Yup.string().
-                            required('Este Campo es Obligatorio'),
-    })
+        identificacion: Yup.string()
+                           .required('Este Campo es Obligatorio'),
+        nombre: Yup.string()
+                           .required('Este Campo es Obligatorio'),
+        fechaI: Yup.date()
+                           .required('Este Campo es Obligatorio'),
+        fechaE: Yup.date()
+                           .required('Este Campo es Obligatorio'),
+        direccion: Yup.string()
+                           .required('Este Campo es Obligatorio'),
+        telefono: Yup.string()
+                           .required('Este Campo es Obligatorio'),
+        correo: Yup.string()
+                           .required('Este Campo es Obligatorio'),
+    });
+
+    const handleSubmitForm = async valores =>{
+        
+        try {
+            
+            valores.pelicula_id = id;
+            valores.fecha_alquiler=valores.fechaI
+            valores.fecha_devolucion = valores.fechaE
+            const { data } = await clienteAxios.post('/peliculas/alquilar-peli', valores);
+            console.log(data);
+            navigate('/');
+            
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
 
     return (
         <div>
@@ -35,6 +55,10 @@ const Formulario = () => {
                     direccion: '',
                     telefono: '',
                     correo: '',
+                }}
+                onSubmit={ async(values, { resetForm})=>{
+                    handleSubmitForm( values );
+                    resetForm();
                 }}
                 enableReinitialize={true}
                 validationSchema={nuevaPeliculaSchema}
@@ -124,7 +148,7 @@ const Formulario = () => {
                         >Telefono:</label>
                         <Field
                             className=''
-                            type='text'
+                            type='tel'
                             id='telefono'
                             name='telefono'
                         />
@@ -139,7 +163,7 @@ const Formulario = () => {
                         >Correo:</label>
                         <Field
                             className=''
-                            type='text'
+                            type='email'
                             id='correo'
                             name='correo'
                         />
@@ -148,6 +172,11 @@ const Formulario = () => {
                             <Alerta>{errors.correo}</Alerta>: null
                         }
                     </div>
+
+                    <input 
+                        type='submit'
+                        value='Enviar'
+                    />
                 </Form>
                     )
                 }}

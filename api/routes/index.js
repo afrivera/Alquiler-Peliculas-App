@@ -13,7 +13,7 @@ router.get('/', getPeliculas );
 router.post('/alquilar-peli', [
     check ('fecha_alquiler', 'el fecha_alquiler es obligatorio' ).not().isEmpty(),
     check ('fecha_devolucion', 'el fecha_devolucion es obligatorio' ).not().isEmpty(),
-    check ('ejemplar_id', 'el ejemplar_id es obligatorio' ).not().isEmpty(),
+    // check ('ejemplar_id', 'el ejemplar_id es obligatorio' ).not().isEmpty(),
     check ('identificacion', 'el identificacion es obligatorio').not().isEmpty(),
     check ('nombre', 'el nombre es obligatorio').not().isEmpty(),
     check ('direccion', 'el direccion es obligatorio').not().isEmpty(),

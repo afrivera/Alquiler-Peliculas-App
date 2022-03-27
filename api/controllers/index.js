@@ -23,18 +23,17 @@ const getPeliculas = async (req, res) => {
 
 // función para alquilar peliculas
 const alquilarPeli= async (req, res)=>{
-    const {fecha_alquiler, fecha_devolucion, ejemplar_id, identificacion, nombre, direccion, telefono, correo, pelicula_id} = req.body;
+    const {fecha_alquiler, fecha_devolucion,  identificacion, nombre, direccion, telefono, correo, pelicula_id} = req.body;
     try {
         const cliente = await Cliente.create({
             identificacion, nombre, direccion, telefono, correo
         });
-        const [alquiler, ejemplar] = await Promise.all([ 
-            AlquilarPelicula.create({
-            fecha_alquiler, fecha_devolucion, cliente_id: cliente.id_cliente, ejemplar_id
-            }),
-            
-            Ejemplar.create({ pelicula_id })
-        ]);
+
+        const ejemplar = await  Ejemplar.create({ pelicula_id });
+        const alquiler = await AlquilarPelicula.create({
+            fecha_alquiler, fecha_devolucion, cliente_id: cliente.id_cliente, ejemplar_id: ejemplar.id_ejemplar
+        });
+        
         await Promise.all ([alquiler.save()], cliente.save(), ejemplar.save());
         res.json({
             msg: 'Alquiler creado satisfactoriamente',
