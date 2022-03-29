@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { getPeliculas, alquilarPeli } = require('../controllers/')
+const { getPeliculas, alquilarPeli, buscarPeliculaPorUsuario } = require('../controllers/')
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 
@@ -23,6 +23,12 @@ router.post('/alquilar-peli', [
     validarCampos 
 ],
 alquilarPeli );
+
+router.get('/mis-pelis',[
+    check ('documento', 'el documento es obligatorio').not().isEmpty(),
+    validarCampos 
+],
+buscarPeliculaPorUsuario )
 
 
 

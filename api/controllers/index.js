@@ -21,6 +21,40 @@ const getPeliculas = async (req, res) => {
     }
 }
 
+// función para buscar peliculas por documento de cliente
+const buscarPeliculaPorUsuario = async (req, res)=>{
+    try {
+        const { documento } = req.query;
+        
+        const peliculas = await Cliente.findAll({
+            where: {identificacion: documento },
+            include: {
+                model: AlquilarPelicula,
+                attributes:['id_alquiler'],
+                include:{
+                    model: Ejemplar,
+                    attributes:['pelicula_id'],
+                    include: {
+                        model: Pelicula
+                    }
+                }
+            },
+            attributes:['identificacion']
+            
+        })
+
+
+        res.json({peliculas})
+        
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error desde el Server',
+            error
+        })
+    }
+    
+}
+
 // función para alquilar peliculas
 const alquilarPeli= async (req, res)=>{
     const {fecha_alquiler, fecha_devolucion,  identificacion, nombre, direccion, telefono, correo, pelicula_id} = req.body;
@@ -50,5 +84,6 @@ const alquilarPeli= async (req, res)=>{
 
 module.exports = {
     getPeliculas,
-    alquilarPeli
+    alquilarPeli,
+    buscarPeliculaPorUsuario
 }

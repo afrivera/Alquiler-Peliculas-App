@@ -14,7 +14,7 @@ const Header = () => {
         
             <nav className={ styles.navegacion }>
               <Link to='/'>Inicio</Link>
-              <Link to='#!'>Mis Pelis</Link>
+              <Link to='/mis-pelis'>Mis Pelis</Link>
             </nav>
           </div>
         </div>
